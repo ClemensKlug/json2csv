@@ -3,6 +3,7 @@ import json
 import sys
 from csv import DictWriter
 
+SEP = "."
 
 def arguments():
 	parser = argparse.ArgumentParser(
@@ -25,12 +26,13 @@ def flat_json(obj, base=""):
 	out = dict()
 	if type(obj) is list:
 		for i, v in enumerate(obj):
-			out.update(**flat_json(v, f"{base}{i}."))
+			out.update(**flat_json(v, f"{base}{i}{SEP}"))
 	elif type(obj) is dict:
 		for k in obj:
-			out.update(**flat_json(obj[k], f"{base}{k}."))
+			out.update(**flat_json(obj[k], f"{base}{k}{SEP}"))
 	else:
-		out[base] = obj
+		key = base.strip(SEP)
+		out[key] = obj
 	return out
 
 

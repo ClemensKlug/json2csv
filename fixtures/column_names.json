@@ -1,0 +1,30 @@
+[
+	{
+		"name": "test1",
+		"type": "type1",
+		"array": [
+			{
+				"entry": "one",
+				"value": 1
+			},
+			{
+				"entry": "two",
+				"value": 2
+			}
+		]	
+	},
+	{
+		"name": "test2",
+		"type": "type2",
+		"array": [
+			{
+				"entry": "two",
+				"value": 2
+			},
+			{
+				"entry": "three",
+				"value": 3
+			}
+		]	
+	}
+]
