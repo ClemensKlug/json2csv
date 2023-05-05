@@ -6,6 +6,7 @@ import sys
 from csv import DictWriter
 
 SEP = "."
+ROOT = "$."
 
 def arguments():
 	parser = argparse.ArgumentParser(
@@ -24,11 +25,14 @@ def write_csv(out_fp, field_names, lines):
 	writer.writerows(lines)
 
 
-def flat_json(obj, base=""):
+def flat_json(obj, base=None):
+	if not base:
+		base = ROOT
 	out = dict()
 	if type(obj) is list:
+		base = base.strip(SEP)
 		for i, v in enumerate(obj):
-			out.update(**flat_json(v, f"{base}{i}{SEP}"))
+			out.update(**flat_json(v, f"{base}[{i}]{SEP}"))
 	elif type(obj) is dict:
 		for k in obj:
 			out.update(**flat_json(obj[k], f"{base}{k}{SEP}"))
