@@ -39,13 +39,17 @@ def flat_json(obj, base=""):
 
 
 def json2csv(obj, target_fp):
-	flat = []
+	lines = []
 	if type(obj) is list:
 		for o in obj:
-			flat.append(flat_json(o))
+			lines.append(flat_json(o))
 	else:
-		flat.append(flat_json(obj))
-	write_csv(target_fp, flat[0].keys(), flat)
+		lines.append(flat_json(obj))
+	headers = set()
+	for entry in lines:
+		headers.update(entry.keys())
+	headers = sorted(headers)
+	write_csv(target_fp, headers, lines)
 
 
 def file2csv(src, target=None):

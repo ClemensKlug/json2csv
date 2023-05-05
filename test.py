@@ -15,6 +15,12 @@ def helper(src_filename, expected_filename, base="fixtures"):
 		assert expected_lines == lines
 		assert filecmp.cmp(expected, tmp.name, shallow=False) # nice interface, but ugly test failure :(
 
+def t(name):
+	helper(f"{name}.json", f"{name}.csv")
+
 def test_column_names():
 	helper("column_names.json", "column_names.csv")
+
+def test_different_arrays():
+	t("different_arrays")
 	
