@@ -15,11 +15,10 @@ def arguments():
 	return parser
 
 
-def write_csv(filename, field_names, lines):
-	with open(filename, "w") as out:
-		writer = DictWriter(out, field_names, dialect="excel")
-		writer.writeheader()
-		writer.writerows(lines)
+def write_csv(out_fp, field_names, lines):
+	writer = DictWriter(out_fp, field_names, dialect="excel")
+	writer.writeheader()
+	writer.writerows(lines)
 
 
 def flat_json(obj, base=""):
@@ -35,14 +34,14 @@ def flat_json(obj, base=""):
 	return out
 
 
-def json2csv(obj, target_filename):
+def json2csv(obj, target_fp):
 	flat = []
 	if type(obj) is list:
 		for o in obj:
 			flat.append(flat_json(o))
 	else:
 		flat.append(flat_json(obj))
-	write_csv(target_filename, flat[0].keys(), flat)
+	write_csv(target_fp, flat[0].keys(), flat)
 
 
 def file2csv(src, target=None):
@@ -50,7 +49,8 @@ def file2csv(src, target=None):
 		target = src.replace(".json", ".csv")
 	with open(src) as src_fp:
 		json_data = json.load(src_fp)
-		json2csv(json_data, target)
+	with open(target, "w") as out:
+		json2csv(json_data, out)
 
 
 if __name__ == '__main__':
